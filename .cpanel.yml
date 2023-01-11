@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/g899kfeg12xe/public_html/app-api.amb-cambodia.com
+    - /bin/cp * $DEPLOYPATH

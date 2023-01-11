@@ -22,3 +22,9 @@ Route::middleware(['check_request'])->group(function() {
         });
     });
 });
+
+
+Route::get('generate_storage', function (){
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    echo 'ok';
+});

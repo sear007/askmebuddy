@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('health', function(Request $request){
-    return $request->header("secrectkey");
+    return 'App health is good!';
 });
 
 Route::middleware(['check_request'])->group(function() {
@@ -22,4 +22,3 @@ Route::middleware(['check_request'])->group(function() {
         });
     });
 });
-

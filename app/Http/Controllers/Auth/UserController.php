@@ -19,14 +19,15 @@ class UserController extends Controller
             return $this->sendError('Validation Error.', $validator->errors());
         }
         $data = $request->all();
-        if($request->hasFile('photo')){
-            $data['photo'] = uploadImage($request->file('photo'));
+        $data['image'] = '';
+        if($request->hasFile('image')){
+            $data['image'] = uploadImage($request->file('image'));
         }
         $user = auth()->user();
         $user->name = $data['name'];
         $user->email = $data['email'];
-        $user->photo = $data['photo'];
+        $user->photo = $data['image'];
         $user->save();
-        return $this->sendResponse($user, 'User register successfully.');
+        return $this->sendResponse($user, 'User updated successfully.');
     }
 }

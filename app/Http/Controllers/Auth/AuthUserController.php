@@ -15,20 +15,19 @@ class AuthUserController extends Controller
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'phone' => 'required|unique:users,phone,except,id',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
+            'opt_code' => 'required',
+            'name' => 'required',
         ]);
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
-        $data = $request->all();
-        $provider = config('constants.provider.direct');
-        $data['password'] = bcrypt($data['password']);
-        $data['provider'] = $provider;
-        $user = User::create($data);
+        $user = User::updateOrCreate(
+            ['opt_code' =>  request('opt_code')],
+            ['phone' =>  request('phone')],
+            ['name' => request('name')],
+            ['provider' => config('constants.provider.direct')],
+        );
         $user->roles()->attach(3);
-        $user['roles'] = $user->roles;
-        $user['token'] =  $user->createToken($provider)->accessToken;
         return $this->sendResponse($user, 'User register successfully.');
     }   
 
@@ -44,7 +43,7 @@ class AuthUserController extends Controller
             $data['phone'] = preg_replace('/^0+/', $data['phoneCode'], $data['phone']);
             $user = User::with('roles')->wherePhone($data['phone'])->first();
             if($user){
-                if(Hash::check($data['password'], $user->password)){
+                if($data['opt_code'] === $user->otp_code){
                     auth()->login($user);
                     $user['token'] =  $user->createToken($provider)->accessToken;
                     return $this->sendResponse($user, 'User login successfully.');

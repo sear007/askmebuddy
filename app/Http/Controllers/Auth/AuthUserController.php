@@ -21,26 +21,26 @@ class AuthUserController extends Controller
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
-        // $user = User::wherePhone(request('phone'))->first();
-        // if($user !== null){
-        //     $user->update([
+        $user = User::wherePhone(request('phone'))->first();
+        if($user !== null){
+            $user->update([
 
-        //     ]);
-        // } else {
-        //     $user = User::create([
-        //         'phone' =>  request('phone'),
-        //         'name' => request('name'),
-        //         'otp_code' => request('otp_code'),
-        //         'provider' => config('constants.provider.direct'),
-        //     ]);
-        // }
-        $user = User::updateOrCreate(
-            ['phone' =>  request('phone')],
-            ['name' => request('name')],
-            ['otp_code' => request('otp_code')],
-            ['provider' => config('constants.provider.direct'),]
-        );
-        $user->roles()->attach(3);
+            ]);
+        } else {
+            $user = User::create([
+                'phone' =>  request('phone'),
+                'name' => request('name'),
+                'otp_code' => request('otp_code'),
+                'provider' => config('constants.provider.direct'),
+            ]);
+        }
+        // $user = User::updateOrCreate(
+        //     ['phone' =>  request('phone')],
+        //     ['name' => request('name')],
+        //     ['otp_code' => request('otp_code')],
+        //     ['provider' => config('constants.provider.direct'),]
+        // );
+        // $user->roles()->attach(3);
         return $this->sendResponse($user, 'User register successfully.');
     }   
 

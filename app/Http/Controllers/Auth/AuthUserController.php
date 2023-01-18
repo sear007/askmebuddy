@@ -21,6 +21,7 @@ class AuthUserController extends Controller
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
+        return $request;
         $user = User::updateOrCreate(
             ['phone' =>  request('phone')],
             ['name' => request('name')],

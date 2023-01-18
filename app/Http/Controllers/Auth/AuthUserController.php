@@ -21,12 +21,12 @@ class AuthUserController extends Controller
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
-        $user = User::updateOrCreate(
-            ['opt_code' =>  request('opt_code')],
-            ['phone' =>  request('phone')],
-            ['name' => request('name')],
-            ['provider' => config('constants.provider.direct')],
-        );
+        $user = User::updateOrCreate([
+                'opt_code' =>  $request->opt_code,
+                'phone' =>  $request->phone,
+                'name' => $request->name,
+                'provider' => config('constants.provider.direct'),
+        ]);
         $user->roles()->attach(3);
         return $this->sendResponse($user, 'User register successfully.');
     }   

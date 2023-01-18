@@ -44,6 +44,11 @@ Route::get('cache_clear', function (){
     echo 'Cache clear';
 });
 
+Route::get('config_cache', function (){
+    \Illuminate\Support\Facades\Artisan::call('config:cache');
+    echo 'Cache clear';
+});
+
 Route::get('migrate_rollback', function (){
     \Illuminate\Support\Facades\Artisan::call('migrate:rollback');
     echo 'ok';

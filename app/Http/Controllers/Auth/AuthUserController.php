@@ -24,7 +24,7 @@ class AuthUserController extends Controller
         $user = User::updateOrCreate(
             ['phone' =>  request('phone')],
             ['name' => request('name')],
-            ['otp_code' => request('otp_code')],
+            ['otp_code' => $request->otp_code],
             ['name' => request('name')],
             ['provider' => config('constants.provider.direct'),]
         );

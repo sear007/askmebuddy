@@ -13,32 +13,21 @@ class AuthUserController extends Controller
 {
 
     public function register(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'phone' => 'required',
-            'otpCode' => 'required',
-            'name' => 'required',
-        ]);
-        if ($validator->fails()) {
+        $validator = Validator::make($request->all(), ['phone' => 'required']);
+        if ($validator->fails()) 
+        {
             return $this->sendError('Validation Error.', $validator->errors());
         }
-        $user = User::wherePhone(request('phone'))->first();
-        if($user !== null){
-            $user->update([
-                'phone' =>  request('phone'),
-                'name' => request('name'),
-                'otp_code' => request('otpCode'),
-            ]);
-        } else {
-            $user = User::create([
-                'phone' =>  request('phone'),
-                'name' => request('name'),
-                'otp_code' => request('otpCode'),
-                'provider' => config('constants.provider.direct'),
-            ]);
-        }
+        $user = User::updateOrCreate([
+            'phone' =>  request('phone'),
+        ],[
+            'name' => request('name'),
+            'verificationId' => request('verificationId'),
+            'provider' => config('constants.provider.direct'),
+        ]);
         $user->roles()->attach(3);
-        return $this->sendResponse($user, 'User register successfully.');
-    }   
+        return $this->sendResponse($user, 'Done!');
+    }
 
     public function login(Request $request)
     {
@@ -52,7 +41,7 @@ class AuthUserController extends Controller
             $data['phone'] = preg_replace('/^0+/', $data['phoneCode'], $data['phone']);
             $user = User::with('roles')->wherePhone($data['phone'])->first();
             if($user){
-                if($data['opt_code'] === $user->otp_code){
+                if($user->verificationId && $data['verificationId'] === $user->verificationId){
                     auth()->login($user);
                     $user['token'] =  $user->createToken($provider)->accessToken;
                     return $this->sendResponse($user, 'User login successfully.');

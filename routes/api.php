@@ -28,3 +28,27 @@ Route::get('generate_storage', function (){
     \Illuminate\Support\Facades\Artisan::call('storage:link');
     echo 'ok';
 });
+
+Route::get('migrate', function (){
+    \Illuminate\Support\Facades\Artisan::call('migrate');
+    echo 'ok';
+});
+
+Route::get('migrate_refresh', function (){
+    \Illuminate\Support\Facades\Artisan::call('migrate:refresh');
+    echo 'ok';
+});
+
+Route::get('migrate_rollback', function (){
+    \Illuminate\Support\Facades\Artisan::call('migrate:rollback');
+    echo 'ok';
+});
+
+Route::get('make_migration', function (Request $request){
+    if($request->has('name')){
+        \Illuminate\Support\Facades\Artisan::call('make:migration' + '  ' + $request->name);
+        echo 'ok';
+    } else {
+        echo 'Missing Name';
+    }
+});

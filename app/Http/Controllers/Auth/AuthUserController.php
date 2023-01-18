@@ -24,8 +24,8 @@ class AuthUserController extends Controller
         $user = User::wherePhone($request->phone)->first();
         if($user !== null){
             $user->update([
-                'otp_code' =>  $request->otp_code,
-                'phone' =>  $request->phone,
+                'otp_code' => $request->otp_code,
+                'phone' => $request->phone,
                 'name' => $request->name,
             ]);
         } else {

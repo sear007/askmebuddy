@@ -39,6 +39,11 @@ Route::get('migrate_refresh', function (){
     echo 'ok';
 });
 
+Route::get('cache_clear', function (){
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    echo 'Cache clear';
+});
+
 Route::get('migrate_rollback', function (){
     \Illuminate\Support\Facades\Artisan::call('migrate:rollback');
     echo 'ok';

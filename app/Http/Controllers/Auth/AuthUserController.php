@@ -24,7 +24,9 @@ class AuthUserController extends Controller
         $user = User::wherePhone(request('phone'))->first();
         if($user !== null){
             $user->update([
-
+                'phone' =>  request('phone'),
+                'name' => request('name'),
+                'otp_code' => request('otp_code'),
             ]);
         } else {
             $user = User::create([

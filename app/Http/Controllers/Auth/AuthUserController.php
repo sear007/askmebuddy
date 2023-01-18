@@ -21,22 +21,13 @@ class AuthUserController extends Controller
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
-        $user = User::wherePhone($request->phone)->first();
-        if($user !== null){
-            $user->update([
-                'otp_code' => $request->otp_code,
-                'phone' => $request->phone,
-                'name' => $request->name,
-            ]);
-        } else {
-            $user = User::create([
-                'otp_code' =>  $request->otp_code,
-                'phone' =>  $request->phone,
-                'name' => $request->name,
-                'provider' => config('constants.provider.direct'),
-            ]);
-        }
-        
+        $user = User::updateOrCreate(
+            ['phone' =>  request('phone')],
+            ['name' => request('name')],
+            ['otp_code' => request('otp_code')],
+            ['name' => request('name')],
+            ['provider' => config('constants.provider.direct'),]
+        );
         $user->roles()->attach(3);
         return $this->sendResponse($user, 'User register successfully.');
     }   

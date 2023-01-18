@@ -15,7 +15,7 @@ class AuthUserController extends Controller
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'phone' => 'required',
-            'opt_code' => 'required',
+            'otp_code' => 'required',
             'name' => 'required',
         ]);
         if ($validator->fails()) {
@@ -24,13 +24,13 @@ class AuthUserController extends Controller
         $user = User::wherePhone($request->phone)->first();
         if($user !== null){
             $user->update([
-                'opt_code' =>  $request->opt_code,
+                'otp_code' =>  $request->otp_code,
                 'phone' =>  $request->phone,
                 'name' => $request->name,
             ]);
         } else {
             $user = User::create([
-                'opt_code' =>  $request->opt_code,
+                'otp_code' =>  $request->otp_code,
                 'phone' =>  $request->phone,
                 'name' => $request->name,
                 'provider' => config('constants.provider.direct'),

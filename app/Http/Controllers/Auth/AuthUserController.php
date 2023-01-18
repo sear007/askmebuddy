@@ -14,7 +14,7 @@ class AuthUserController extends Controller
 
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'phone' => 'required|unique:users,phone,except,id',
+            'phone' => 'required',
             'opt_code' => 'required',
             'name' => 'required',
         ]);

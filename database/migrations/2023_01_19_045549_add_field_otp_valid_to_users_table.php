@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('verificationId')->nullable();
+            $table->boolean('otpValid')->default(false);
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('verificationId');
+            $table->dropColumn('otpValid');
         });
     }
 };

@@ -22,7 +22,7 @@ class AuthUserController extends Controller
             'phone' =>  request('phone'),
         ],[
             'name' => request('name'),
-            'verificationId' => request('verificationId'),
+            'otpValid' => false,
             'provider' => config('constants.provider.direct'),
         ]);
         $user->roles()->attach(3);
@@ -40,13 +40,10 @@ class AuthUserController extends Controller
             $provider = config('constants.provider.direct');
             $data['phone'] = preg_replace('/^0+/', $data['phoneCode'], $data['phone']);
             $user = User::with('roles')->wherePhone($data['phone'])->first();
-            if($user){
-                if($user->verificationId && $data['verificationId'] === $user->verificationId){
-                    auth()->login($user);
-                    $user['token'] =  $user->createToken($provider)->accessToken;
-                    return $this->sendResponse($user, 'User login successfully.');
-                }
-                return $this->sendError('Invalid password!', ['error' => 'Unauthorized']);
+            if($user && $user->otpValid){
+                auth()->login($user);
+                $user['token'] =  $user->createToken($provider)->accessToken;
+                return $this->sendResponse($user, 'User login successfully.');
             }
             return $this->sendError('User not found!', ['error' => 'Unauthorized']);
         } catch (\Throwable $th) {

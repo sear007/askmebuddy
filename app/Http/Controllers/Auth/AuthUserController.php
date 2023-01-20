@@ -26,6 +26,8 @@ class AuthUserController extends Controller
             'provider' => config('constants.provider.direct'),
         ]);
         $user->roles()->attach(3);
+        auth()->login($user);
+        $user['token'] = $user->createToken(config('constants.provider.direct'))->accessToken;
         return $this->sendResponse($user, 'Done!');
     }
 

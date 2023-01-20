@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthUserController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Superadmin\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,18 @@ Route::middleware(['check_request'])->group(function() {
             Route::post('logout', [AuthUserController::class, 'logout']);
         });
     });
+});
+
+Route::prefix('superadmin')->group(function(){
+    //For Suer admin currently no any auth middleware
+
+    Route::prefix('public')->group(function(){
+        Route::prefix('category')->group(function(){
+            Route::get('/', [CategoryController::class, 'Categories']);
+            Route::post('/store', [CategoryController::class, 'Store']);
+        });
+    });
+
 });
 
 

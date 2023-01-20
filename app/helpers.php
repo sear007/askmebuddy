@@ -46,3 +46,11 @@ if(!function_exists('uploadImage')){
         return $photo;
     }
 }
+
+if(!function_exists('uploadIcon')){
+    function uploadIcon($image, $path = 'icons', $option = 'public'){
+        $filename = $image->getClientOriginalName();
+        $photo = $image->storeAs($path, time().$filename, $option);
+        return $photo;
+    }
+}

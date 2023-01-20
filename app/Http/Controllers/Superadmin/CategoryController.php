@@ -26,7 +26,13 @@ class CategoryController extends Controller
         return $this->sendResponse($category, 'Done!');
     }
 
-    public function Categories(){
-        return Category::get();
+    public function Categories(Request $request){
+        if($request->has('order') && $request->has('dir')){
+            if($request->has('limit')){
+                return Category::orderBy(request('order', request('dir')))->limit(request('limit'))->get();
+            }
+            return Category::orderBy(request('order', request('dir')))->get();
+        }
+        return 'Error Query';
     }
 }

@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Rating;
+use Database\Seeders\RatingTableSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +24,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         // $this->call(UsersTableSeeder::class);
-        $this->call(ClientTableSeeder::class);
+        // $this->call(ClientTableSeeder::class);
         // $this->call(VendorTableSeeder::class);
+        // $this->call(RatingTableSeeder::class);
+        Rating::factory(5000)->create();
     }
 }

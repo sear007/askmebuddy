@@ -13,15 +13,15 @@ class VendorController extends Controller
         $vendors = [];
         $total = 0;
         $query = Vendor::with(['category', 'service', 'payment', 'contact']);
-        $query->when(request('cat_id'), function($q){
-            $q->whereCategoryId(request('cat_id'));
+        $query->when(request('catId'), function($q){
+            $q->whereCategoryId(request('catId'));
         });
         $query->when(request('search'), function($q){
             $q->where('business_name', 'like', '%' . request('search') . '%');
         });
-        if($request->has('page') && $request->has('per_page')){
-            $offset = (request('page') - 1) * request('per_page');
-            $vendors = $query->limit(request('per_page'))->offset($offset);
+        if($request->has('page') && $request->has('perPage')){
+            $offset = (request('page') - 1) * request('perPage');
+            $vendors = $query->limit(request('perPage'))->offset($offset);
         }
         $vendors = $query->get();
         for ($i=0; $i < $total; $i++) { 

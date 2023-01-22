@@ -13,6 +13,7 @@ class Vendor extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $appends = array('total_rating', 'avg_rating');
     public function contact(){
         return $this->hasOne(Contact::class, 'vendor_id');
     }
@@ -24,5 +25,17 @@ class Vendor extends Model
     }
     public function service(){
         return $this->belongsTo(Service::class, 'service_id', 'id');
+    }
+    public function rating(){
+        return $this->hasMany(Rating::class, 'vendor_id');
+    }
+
+    public function getTotalRatingAttribute()
+    {
+        return $this->rating->sum('rating'); 
+    }
+    public function getAvgRatingAttribute()
+    {
+        return $this->rating->avg('rating'); 
     }
 }

@@ -32,7 +32,7 @@ class Vendor extends Model
 
     public function getTotalRatingAttribute()
     {
-        return $this->rating->sum('rating'); 
+        return $this->rating->count('rating'); 
     }
     public function getAvgRatingAttribute()
     {

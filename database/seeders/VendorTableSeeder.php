@@ -29,6 +29,9 @@ class VendorTableSeeder extends Seeder
                 'service_id' => $service['id'],
                 'category_id' => $category['id'],
                 'business_name' => $faker->company(),
+                'street' => $faker->streetAddress(),
+                'city' => $faker->streetAddress(),
+                'country' => $faker->country(),
                 'legal_business_name' => $faker->catchPhrase(),
             ]);
             $vendor->contact()->updateOrCreate([

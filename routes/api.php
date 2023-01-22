@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthUserController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Superadmin\CategoryController;
+use App\Http\Controllers\Superadmin\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,10 @@ Route::prefix('superadmin')->group(function(){
         Route::prefix('category')->group(function(){
             Route::get('/', [CategoryController::class, 'Categories']);
             Route::post('/store', [CategoryController::class, 'Store']);
+        });
+        Route::prefix('vendor')->group(function(){
+            Route::get('/', [VendorController::class, 'Vendors']);
+            Route::post('/store', [VendorController::class, 'Store']);
         });
     });
 
@@ -74,4 +79,9 @@ Route::get('make_migration', function (Request $request){
     } else {
         echo 'Missing Name';
     }
+});
+
+Route::get('db_seed', function (Request $request){
+    \Illuminate\Support\Facades\Artisan::call('db:seed');
+    echo 'ok';
 });

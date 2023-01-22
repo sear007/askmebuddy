@@ -10,8 +10,21 @@ class VendorController extends Controller
 {
     //
     public function Vendors(Request $request){
-        $vendors = Vendor::with(['category', 'service', 'payment', 'contact'])->get();
-        for ($i=0; $i < count($vendors); $i++) { 
+        $vendors = [];
+        $total = 0;
+        $query = Vendor::with(['category', 'service', 'payment', 'contact']);
+        $query->when(request('cat_id'), function($q){
+            $q->whereCategoryId(request('cat_id'));
+        });
+        $query->when(request('search'), function($q){
+            $q->where('business_name', 'like', '%' . request('search') . '%');
+        });
+        if($request->has('page') && $request->has('per_page')){
+            $offset = (request('page') - 1) * request('per_page');
+            $vendors = $query->limit(request('per_page'))->offset($offset);
+        }
+        $vendors = $query->get();
+        for ($i=0; $i < $total; $i++) { 
             $vendors[$i]['images'] = array(
                 ['id' => '', 'url' => 'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'1'],
                 ['id' => '', 'url' => 'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'2'],

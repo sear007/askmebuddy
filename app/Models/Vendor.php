@@ -13,7 +13,7 @@ class Vendor extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = array('total_rating', 'avg_rating');
+    protected $appends = array('total_rating', 'avg_rating', 'images');
     public function contact(){
         return $this->hasOne(Contact::class, 'vendor_id');
     }
@@ -37,5 +37,13 @@ class Vendor extends Model
     public function getAvgRatingAttribute()
     {
         return $this->rating->avg('rating'); 
+    }
+    public function getImagesAttribute()
+    {
+        return array(
+            'https://loremflickr.com/640/480/'.$this->category->name.'?lock='.$this->id.'1',
+            'https://loremflickr.com/640/480/'.$this->category->name.'?lock='.$this->id.'2',
+            'https://loremflickr.com/640/480/'.$this->category->name.'?lock='.$this->id.'3',
+        ); 
     }
 }

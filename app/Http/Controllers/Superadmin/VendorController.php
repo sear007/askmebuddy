@@ -24,15 +24,15 @@ class VendorController extends Controller
             $vendors = $query->limit(request('perPage'))->offset($offset);
         }
         $vendors = $query->get();
-        for ($i=0; $i < count($vendors); $i++) { 
-            $vendors[$i]['images'] = array(
-                'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'1',
-                'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'2',
-                'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'3',
-                'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'4',
-                'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'5',
-            );
-        };
+        // for ($i=0; $i < count($vendors); $i++) { 
+        //     $vendors[$i]['images'] = array(
+        //         'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'1',
+        //         'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'2',
+        //         'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'3',
+        //         'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'4',
+        //         'https://loremflickr.com/1280/960/'.$vendors[$i]['category']['name'].'?lock='.$vendors[$i]['id'].'5',
+        //     );
+        // };
         return $vendors;
     }
 

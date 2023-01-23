@@ -41,9 +41,9 @@ class Vendor extends Model
     public function getImagesAttribute()
     {
         return array(
-            'https://loremflickr.com/640/480/'.$this->category->name.'?lock='.$this->id.'1',
-            'https://loremflickr.com/640/480/'.$this->category->name.'?lock='.$this->id.'2',
-            'https://loremflickr.com/640/480/'.$this->category->name.'?lock='.$this->id.'3',
+            'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'1',
+            'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'2',
+            'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'3',
         ); 
     }
 }

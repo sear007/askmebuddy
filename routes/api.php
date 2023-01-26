@@ -35,7 +35,10 @@ Route::prefix('superadmin')->group(function(){
         });
         Route::prefix('vendor')->group(function(){
             Route::get('/', [VendorController::class, 'Vendors']);
+            Route::get('/{id}', [VendorController::class, 'Vendor']);
+            Route::post('/update', [VendorController::class, 'Update']);
             Route::post('/store', [VendorController::class, 'Store']);
+            Route::post('/delete/{id}', [VendorController::class, 'Destroy']);
         });
     });
 

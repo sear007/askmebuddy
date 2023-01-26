@@ -6,6 +6,7 @@ use App\Models\Superadmin\Category;
 use App\Models\Superadmin\Payment;
 use App\Models\Superadmin\Service;
 use App\Models\Superadmin\Contact;
+use App\Models\Superadmin\VendorImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,11 @@ class Vendor extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = array('total_rating', 'avg_rating', 'images');
+    protected $appends = array(
+        'total_rating', 
+        'avg_rating',
+        'fake_images',
+    );
     public function contact(){
         return $this->hasOne(Contact::class, 'vendor_id');
     }
@@ -29,7 +34,9 @@ class Vendor extends Model
     public function rating(){
         return $this->hasMany(Rating::class, 'vendor_id');
     }
-
+    public function images(){
+        return $this->hasMany(VendorImage::class, 'vendor_id');
+    }
     public function getTotalRatingAttribute()
     {
         return $this->rating->count('rating'); 
@@ -38,7 +45,7 @@ class Vendor extends Model
     {
         return $this->rating->avg('rating'); 
     }
-    public function getImagesAttribute()
+    public function getFakeImagesAttribute()
     {
         return array(
             'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'1',

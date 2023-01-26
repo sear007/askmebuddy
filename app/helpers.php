@@ -54,3 +54,11 @@ if(!function_exists('uploadIcon')){
         return $photo;
     }
 }
+
+if(!function_exists('uploadImageVendor')){
+    function uploadImageVendor($image, $path = 'vendors', $option = 'public'){
+        $filename = $image->getClientOriginalName();
+        $photo = $image->storeAs($path, time().$filename, $option);
+        return $photo;
+    }
+}

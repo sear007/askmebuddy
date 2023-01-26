@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        // $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         // $this->call(ClientTableSeeder::class);
         // $this->call(VendorTableSeeder::class);
         // $this->call(RatingTableSeeder::class);
-        Rating::factory(5000)->create();
+        // Rating::factory(5000)->create();
     }
 }

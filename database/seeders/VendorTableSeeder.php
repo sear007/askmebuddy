@@ -19,13 +19,11 @@ class VendorTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::get();
         $faker = Factory::create();
-        foreach ($users as $key => $user) {
+        for ($i=0; $i < 1000; $i++) {
             $category = Category::inRandomOrder()->first();
             $service = Service::inRandomOrder()->first();
             $vendor = Vendor::create([
-                'user_id' => $user['id'],
                 'service_id' => $service['id'],
                 'category_id' => $category['id'],
                 'business_name' => $faker->company(),
@@ -39,6 +37,7 @@ class VendorTableSeeder extends Seeder
             ], [
                 'contact_person' => $faker->name(),
                 'mobile_no' => $faker->e164PhoneNumber(),
+                'telegram_number' => $faker->e164PhoneNumber(),
                 'email' => $faker->companyEmail(),
             ]);
             $vendor->payment()->updateOrCreate([

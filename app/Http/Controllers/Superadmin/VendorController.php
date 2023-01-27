@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class VendorController extends Controller
 {
     public function Search(Request $request){
+        $offset = (request('page') - 1) * request('perPage');
         return Vendor::with(['category', 'images'])
             ->where('business_name', 'like', '%'.request('search').'%')
-            ->limit(15)
+            ->limit(request('perPage'))
+            ->offset($offset)
             ->orderBy('id', 'asc')
             ->get();
     }

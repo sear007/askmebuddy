@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Superadmin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Superadmin\Category;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class VendorController extends Controller
 {
+    public function Search(Request $request){
+        if(!empty($request->search)){
+            return Vendor::with(['category', 'images'])
+            ->where('business_name', 'like', '%'.request('search').'%')
+            ->limit(5)
+            ->get();
+        }
+    }
     public function Vendor($id){
         return Vendor::with(['category', 'service', 'payment', 'contact', 'images'])->find($id);
     }

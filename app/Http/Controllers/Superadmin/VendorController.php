@@ -11,12 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class VendorController extends Controller
 {
     public function Search(Request $request){
-        if(!empty($request->search)){
-            return Vendor::with(['category', 'images'])
+        return Vendor::with(['category', 'images'])
             ->where('business_name', 'like', '%'.request('search').'%')
-            ->limit(5)
+            ->limit(15)
+            ->orderBy('id', 'asc')
             ->get();
-        }
     }
     public function Vendor($id){
         return Vendor::with(['category', 'service', 'payment', 'contact', 'images'])->find($id);

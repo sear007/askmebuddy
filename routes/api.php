@@ -24,7 +24,6 @@ Route::middleware(['check_request'])->group(function() {
         });
     });
 });
-
 Route::prefix('superadmin')->group(function(){
     //For Suer admin currently no any auth middleware
 
@@ -40,6 +39,7 @@ Route::prefix('superadmin')->group(function(){
             Route::post('/store', [VendorController::class, 'Store']);
             Route::post('/delete/{id}', [VendorController::class, 'Destroy']);
         });
+        Route::get('/search', [VendorController::class, 'Search']);
     });
 
 });

@@ -11,13 +11,15 @@ use Illuminate\Support\Facades\Validator;
 class VendorController extends Controller
 {
     public function Search(Request $request){
-        $offset = (request('page') - 1) * request('perPage');
-        return Vendor::with(['category', 'images'])
-            ->where('business_name', 'like', '%'.request('search').'%')
-            ->limit(request('perPage'))
-            ->offset($offset)
-            ->orderBy('id', 'asc')
-            ->get();
+        if(!empty(request('search'))){
+            $offset = (request('page') - 1) * request('perPage');
+            return Vendor::with(['category', 'images'])
+                ->where('business_name', 'like', '%'.request('search').'%')
+                ->limit(request('perPage'))
+                ->offset($offset)
+                ->orderBy('id', 'asc')
+                ->get();
+        }
     }
     public function Vendor($id){
         return Vendor::with(['category', 'service', 'payment', 'contact', 'images'])->find($id);

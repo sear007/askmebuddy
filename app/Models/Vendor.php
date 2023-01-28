@@ -7,6 +7,7 @@ use App\Models\Superadmin\Payment;
 use App\Models\Superadmin\Service;
 use App\Models\Superadmin\Contact;
 use App\Models\Superadmin\VendorImage;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -52,5 +53,9 @@ class Vendor extends Model
             'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'2',
             'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'3',
         ); 
+    }
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d/m/Y');
     }
 }

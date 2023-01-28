@@ -30,6 +30,7 @@ class VendorController extends Controller
         ->where('business_name', 'like', '%'.request('search').'%')
         ->where('category_id', '=', request('catId'))
         ->limit(request('perPage'))->offset($offset)
+        ->orderBy('id', 'desc')
         ->get();
     }
     public function Store(Request $request){

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Rating extends Model
 {
     use HasFactory;
-    protected $dateFormat = 'U';
     protected $guarded = [];
     protected $table = 'ratings';
     protected $appends = array(

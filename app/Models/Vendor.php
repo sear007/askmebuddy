@@ -14,7 +14,6 @@ class Vendor extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $dateFormat = 'U';
     protected $appends = array(
         'total_rating', 
         'avg_rating',

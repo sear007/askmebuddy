@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthUserController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Superadmin\CategoryController;
+use App\Http\Controllers\Superadmin\RatingController;
 use App\Http\Controllers\Superadmin\ServiceController;
 use App\Http\Controllers\Superadmin\VendorController;
 use Illuminate\Http\Request;
@@ -43,6 +44,9 @@ Route::prefix('superadmin')->group(function(){
             Route::post('/update', [VendorController::class, 'Update']);
             Route::post('/store', [VendorController::class, 'Store']);
             Route::post('/delete/{id}', [VendorController::class, 'Destroy']);
+
+            Route::post('/rating', [RatingController::class, 'Store'])->middleware('auth:api');
+            Route::get('/{id}/rating', [RatingController::class, 'getRating'])->middleware('auth:api');
         });
         Route::get('/search', [VendorController::class, 'Search']);
     });

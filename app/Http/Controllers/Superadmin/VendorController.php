@@ -28,7 +28,9 @@ class VendorController extends Controller
         $offset = (request('page') - 1) * request('perPage');
         return Vendor::with(['category', 'service', 'payment', 'contact', 'images'])
         ->where('business_name', 'like', '%'.request('search').'%')
-        ->where('category_id', '=', request('catId'))
+        ->when($request->catId, function($query){
+            $query->where('category_id', '=', request('catId'));
+        })
         ->limit(request('perPage'))->offset($offset)
         ->orderBy('id', 'desc')
         ->get();

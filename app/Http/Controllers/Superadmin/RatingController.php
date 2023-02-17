@@ -26,4 +26,5 @@ class RatingController extends Controller
         ->orderBy('id', 'desc')
         ->get();
     }
+    
 }

@@ -64,6 +64,11 @@ Route::get('migrate', function (){
     echo 'ok';
 });
 
+Route::get('passport_install', function (){
+    \Illuminate\Support\Facades\Artisan::call('passport:install');
+    echo 'ok';
+});
+
 Route::get('migrate_refresh', function (){
     \Illuminate\Support\Facades\Artisan::call('migrate:refresh');
     echo 'ok';

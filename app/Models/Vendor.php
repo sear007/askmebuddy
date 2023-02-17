@@ -47,10 +47,12 @@ class Vendor extends Model
     }
     public function getFakeImagesAttribute()
     {
-        return array(
-            'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'1',
-            'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'2',
-            'https://loremflickr.com/640/480/'.$this->category->name.'?random='.$this->id.'3',
-        ); 
+        $images = [];
+        $path = url('/').'/storage/';
+        $data = $this->images()->get();
+        foreach($data as $key => $image){
+            $images[$key] = $path.$image->url;
+        }
+        return $images;
     }
 }
